@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LoginForm = ({ onChange }) => {
+const LoginForm = ({ onChange, onSubmit }) => {
   return (
     <div className="loginFormWrapper">
-      <form className="loginForm">
+      <form className="loginForm" onSubmit={onSubmit}>
         <div className="inputWrapper">
           <input
             type="text"

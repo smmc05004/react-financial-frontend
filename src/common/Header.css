@@ -1,0 +1,14 @@
+.HeaderWrapper {
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.logo {
+  float: left;
+}
+
+.headerRight {
+  float: right;
+}

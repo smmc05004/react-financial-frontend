@@ -1,12 +1,14 @@
 import React from 'react';
 import RegisterContainer from '../containers/RegisterContainer';
-import Header from '../common/Header';
+import HeaderContiner from '../containers/HeaderContainer';
 
 const RegisterPage = () => {
   return (
     <>
-      <Header />
-      <RegisterContainer />
+      <div className="registerPageWrapper">
+        <HeaderContiner />
+        <RegisterContainer />
+      </div>
     </>
   );
 };

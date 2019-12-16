@@ -1,10 +1,13 @@
 import React from 'react';
+import Main from '../components/main/Main';
+import HeaderContiner from '../containers/HeaderContainer';
 
 const MainPage = () => {
   return (
-    <div>
-      <p>메인 페이지</p>
-    </div>
+    <>
+      <HeaderContiner />
+      <Main />
+    </>
   );
 };
 
