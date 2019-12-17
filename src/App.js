@@ -4,6 +4,7 @@ import './App.css';
 import MainPage from './pages/MainPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import LedgerWritePage from './pages/LedgerWritePage';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Route path="/" component={MainPage} exact />
       <Route path="/register" component={RegisterPage} />
       <Route path="/login" component={LoginPage} />
+      <Route path="/ledger" component={LedgerWritePage} />
     </>
   );
 };

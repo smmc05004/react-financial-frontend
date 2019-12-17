@@ -1,0 +1,9 @@
+.ledgerLeft {
+  float: left;
+  width: 200px;
+  height: calc(100% - 50px);
+}
+
+.ledgerLeft ul {
+  list-style: none;
+}
