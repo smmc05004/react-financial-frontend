@@ -1,8 +1,7 @@
 import client from './client';
 
-export const addLedger = ({ type, category, title, place, amount, user }) => {
-  console.log();
-  return client.post('/api/ledger/add', {
+export const addLedger = ({ type, category, title, place, amount, user }) =>
+  client.post('/api/ledger/add', {
     type,
     category,
     title,
@@ -10,4 +9,3 @@ export const addLedger = ({ type, category, title, place, amount, user }) => {
     amount,
     user,
   });
-};

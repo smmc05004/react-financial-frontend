@@ -5,7 +5,6 @@ import Button from './HeaderBtn';
 import './Header.css';
 
 const Header = ({ user, onLogout, onClick }) => {
-  // console.log('컨테이너에서 받아온 user:', user);
   return (
     <div className="HeaderWrapper">
       <div className="logo">로고 들어갈 자리</div>

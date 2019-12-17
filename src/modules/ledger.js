@@ -19,25 +19,14 @@ export const changeField = createAction(CHANGE_FIELD, ({ name, value }) => ({
 }));
 export const addLedger = createAction(
   ADD_LEDGER,
-  ({ type, category, title, place, amount, user }) => {
-    console.log(
-      '서버로 보낼 파라미터: ',
-      type,
-      category,
-      title,
-      place,
-      amount,
-      user,
-    );
-    return {
-      type,
-      category,
-      title,
-      place,
-      amount,
-      user,
-    };
-  },
+  ({ type, category, title, place, amount, user }) => ({
+    type,
+    category,
+    title,
+    place,
+    amount,
+    user,
+  }),
 );
 const addLedgerSaga = createRequestSaga(ADD_LEDGER, ledgerAPI.addLedger);
 
