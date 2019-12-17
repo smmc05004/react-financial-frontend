@@ -11,12 +11,18 @@ const [
   ADD_LEDGER_SUCCESS,
   ADD_LEDGER_FAILURE,
 ] = createRequestActionTypes('ledger/ADD_LEDGER');
+const [
+  LEDGERLIST,
+  LEDGERLIST_SUCCESS,
+  LEDGERLIST_FAILURE,
+] = createRequestActionTypes('ledger/LEDGERLIST');
 
 export const initialField = createAction(INITIAL_FIELD);
 export const changeField = createAction(CHANGE_FIELD, ({ name, value }) => ({
   name,
   value,
 }));
+
 export const addLedger = createAction(
   ADD_LEDGER,
   ({ type, category, title, place, amount, user }) => ({
@@ -28,10 +34,17 @@ export const addLedger = createAction(
     user,
   }),
 );
+export const ledgerList = createAction(LEDGERLIST, ({ pageNum, userId }) => ({
+  pageNum,
+  userId,
+}));
+
 const addLedgerSaga = createRequestSaga(ADD_LEDGER, ledgerAPI.addLedger);
+const ledgerListSaga = createRequestSaga(LEDGERLIST, ledgerAPI.listLedgers);
 
 export function* ledgerSaga() {
   yield takeLatest(ADD_LEDGER, addLedgerSaga);
+  yield takeLatest(LEDGERLIST, ledgerListSaga);
 }
 
 const initialState = {
@@ -40,8 +53,12 @@ const initialState = {
   title: '',
   place: '',
   amount: '',
+
   ledger: null,
   ledgerError: null,
+
+  ledgers: null,
+  ledgersError: null,
 };
 
 const ledger = handleActions(
@@ -61,6 +78,20 @@ const ledger = handleActions(
     [ADD_LEDGER_FAILURE]: (state, { payload: ledgerError }) => {
       console.error('에러 발생: ', ledgerError);
       return { ...state, ledger: null, ledgerError };
+    },
+
+    [LEDGERLIST_SUCCESS]: (state, { payload: ledgers }) => {
+      console.log('성공: ', ledgers);
+      return { ...state, ledgers };
+    },
+
+    [LEDGERLIST_FAILURE]: (state, { payload: ledgersError }) => {
+      console.log('실패: ', ledgersError);
+      return {
+        ...state,
+        ledgers: null,
+        ledgersError,
+      };
     },
   },
   initialState,

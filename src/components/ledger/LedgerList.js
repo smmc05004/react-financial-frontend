@@ -2,6 +2,8 @@ import React from 'react';
 import CrudBtnBundle from './CrudBtnBundle';
 import LedgerItems from './LedgerItems';
 import LedgerModal from './LedgerModal';
+import Pagenation from '../../common/Pagenation';
+
 import './LedgerList.css';
 
 const LedgerList = ({
@@ -14,6 +16,7 @@ const LedgerList = ({
   modal,
   form,
   type,
+  ledgers,
 }) => {
   return (
     <>
@@ -23,7 +26,7 @@ const LedgerList = ({
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
-        <LedgerItems />
+        <LedgerItems ledgers={ledgers} />
       </div>
 
       <LedgerModal
@@ -34,6 +37,8 @@ const LedgerList = ({
         form={form}
         type={type}
       />
+
+      <Pagenation />
     </>
   );
 };

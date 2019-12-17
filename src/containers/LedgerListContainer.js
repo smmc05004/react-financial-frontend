@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LedgerList from '../components/ledger/LedgerList';
-import { initialField, changeField, addLedger } from '../modules/ledger';
+import {
+  initialField,
+  changeField,
+  addLedger,
+  ledgerList,
+} from '../modules/ledger';
+import qs from 'qs';
+import { withRouter } from 'react-router-dom';
 
-const LedgerListContainer = () => {
+const LedgerListContainer = ({ location }) => {
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
 
-  const { type, form, user, ledger } = useSelector(({ ledger, user }) => ({
+  const {
+    type,
+    form,
+    user,
+    ledger,
+    ledgerError,
+    ledgers,
+    ledgersError,
+  } = useSelector(({ ledger, user }) => ({
     type: ledger.type,
     form: ledger,
     user: user.user,
     ledger: ledger.ledger,
+    ledgerError: ledger.ledgerError,
+    ledgers: ledger.ledgers,
+    ledgersError: ledger.ledgersError,
   }));
-  //   console.log('ledgerForm: ', form);
 
   const onInsert = () => {
     dispatch(initialField());
@@ -53,6 +70,14 @@ const LedgerListContainer = () => {
     }
   }, [ledger]);
 
+  useEffect(() => {
+    const { pageNum, userId } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
+    console.log('location.search: ', location.search);
+    dispatch(ledgerList({ pageNum, userId }));
+  }, [dispatch, location.search]);
+
   return (
     <LedgerList
       onInsert={onInsert}
@@ -64,8 +89,9 @@ const LedgerListContainer = () => {
       modal={modal}
       form={form}
       type={type}
+      ledgers={ledgers}
     />
   );
 };
 
-export default LedgerListContainer;
+export default withRouter(LedgerListContainer);

@@ -1,18 +1,18 @@
 import React from 'react';
 
-const LedgerItem = () => {
+const LedgerItem = ({ ledger }) => {
   return (
-    <tbody>
+    <>
       <tr>
         <td>
-          <input type="checkbox" />
+          <input type="checkbox" value={ledger._id} />
         </td>
-        <td>식품</td>
-        <td>이마트</td>
-        <td>20,000</td>
+        <td>{ledger.type}</td>
+        <td>{ledger.category}</td>
+        <td>{ledger.amount}</td>
         <td>2019-12-16</td>
       </tr>
-    </tbody>
+    </>
   );
 };
 
