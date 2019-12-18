@@ -2,8 +2,7 @@ import React from 'react';
 import CrudBtnBundle from './CrudBtnBundle';
 import LedgerItems from './LedgerItems';
 import LedgerModal from './LedgerModal';
-import Pagenation from '../../common/Pagenation';
-
+import PaginationContainer from '../../containers/PaginationContainer';
 import './LedgerList.css';
 
 const LedgerList = ({
@@ -17,6 +16,9 @@ const LedgerList = ({
   form,
   type,
   ledgers,
+  totalCount,
+
+  tempValue,
 }) => {
   return (
     <>
@@ -27,6 +29,8 @@ const LedgerList = ({
           onDelete={onDelete}
         />
         <LedgerItems ledgers={ledgers} />
+
+        <PaginationContainer totalCount={totalCount} tempValue={tempValue} />
       </div>
 
       <LedgerModal
@@ -37,8 +41,6 @@ const LedgerList = ({
         form={form}
         type={type}
       />
-
-      <Pagenation />
     </>
   );
 };

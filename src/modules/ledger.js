@@ -59,6 +59,7 @@ const initialState = {
 
   ledgers: null,
   ledgersError: null,
+  totalCount: 0,
 };
 
 const ledger = handleActions(
@@ -80,9 +81,14 @@ const ledger = handleActions(
       return { ...state, ledger: null, ledgerError };
     },
 
-    [LEDGERLIST_SUCCESS]: (state, { payload: ledgers }) => {
-      console.log('성공: ', ledgers);
-      return { ...state, ledgers };
+    // [LEDGERLIST_SUCCESS]: (state, { payload: ledgers }) => {
+    //   console.log('성공: ', ledgers);
+    //   return { ...state, ledgers };
+    // },
+
+    [LEDGERLIST_SUCCESS]: (state, { payload: { ledgers, totalCount } }) => {
+      console.log('성공: ', ledgers, totalCount);
+      return { ...state, ledgers, totalCount };
     },
 
     [LEDGERLIST_FAILURE]: (state, { payload: ledgersError }) => {

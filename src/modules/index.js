@@ -3,6 +3,8 @@ import auth, { authSaga } from './auth';
 import user, { userSaga } from './user';
 import loading from './loading';
 import ledger, { ledgerSaga } from './ledger';
+import pagination from './pagination';
+
 import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
@@ -10,6 +12,7 @@ const rootReducer = combineReducers({
   loading,
   user,
   ledger,
+  pagination,
 });
 
 export function* rootSaga() {

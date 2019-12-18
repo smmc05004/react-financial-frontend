@@ -17,7 +17,6 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
     <Modal isOpen={modal} toggle={onCancel}>
       <ModalHeader toggle={onCancel}>가계부 입력</ModalHeader>
       <ModalBody>
-        {/* <Form onSubmit={onSubmit}> */}
         <Form>
           <FormGroup tag="fieldset">
             <FormGroup check>

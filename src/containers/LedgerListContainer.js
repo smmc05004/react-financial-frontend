@@ -13,24 +13,18 @@ import { withRouter } from 'react-router-dom';
 const LedgerListContainer = ({ location }) => {
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
+  const [tempValue, setTempValue] = useState(0);
 
-  const {
-    type,
-    form,
-    user,
-    ledger,
-    ledgerError,
-    ledgers,
-    ledgersError,
-  } = useSelector(({ ledger, user }) => ({
-    type: ledger.type,
-    form: ledger,
-    user: user.user,
-    ledger: ledger.ledger,
-    ledgerError: ledger.ledgerError,
-    ledgers: ledger.ledgers,
-    ledgersError: ledger.ledgersError,
-  }));
+  const { type, form, user, ledger, ledgers, totalCount } = useSelector(
+    ({ ledger, user }) => ({
+      type: ledger.type,
+      form: ledger,
+      user: user.user,
+      ledger: ledger.ledger,
+      ledgers: ledger.ledgers,
+      totalCount: ledger.totalCount,
+    }),
+  );
 
   const onInsert = () => {
     dispatch(initialField());
@@ -68,14 +62,14 @@ const LedgerListContainer = ({ location }) => {
       alert('등록되었습니다.');
       setModal(!modal);
     }
-  }, [ledger]);
+  }, [ledger, modal]);
 
   useEffect(() => {
     const { pageNum, userId } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    console.log('location.search: ', location.search);
     dispatch(ledgerList({ pageNum, userId }));
+    setTempValue(parseInt(pageNum));
   }, [dispatch, location.search]);
 
   return (
@@ -90,6 +84,8 @@ const LedgerListContainer = ({ location }) => {
       form={form}
       type={type}
       ledgers={ledgers}
+      totalCount={totalCount}
+      tempValue={tempValue}
     />
   );
 };
