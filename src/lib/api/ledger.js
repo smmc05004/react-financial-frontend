@@ -18,3 +18,5 @@ export const listLedgers = ({ pageNum, userId }) => {
   });
   return client.get(`/api/ledger/lists?${queryString}`);
 };
+
+export const getLedger = ({ id }) => client.post('/api/ledger/read', { id });

@@ -12,7 +12,16 @@ import {
 } from 'reactstrap';
 import './LedgerModal.css';
 
-const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
+const LedgerModal = ({
+  onChange,
+  onCancel,
+  onSubmit,
+  modal,
+  form,
+  type,
+  ledger,
+}) => {
+  console.log('ledger', ledger);
   return (
     <Modal isOpen={modal} toggle={onCancel}>
       <ModalHeader toggle={onCancel}>가계부 입력</ModalHeader>
@@ -66,7 +75,7 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
                   placeholder="제목을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.title}
+                  value={ledger ? ledger.title : form.title}
                 />
               </FormGroup>
               <FormGroup>
@@ -77,7 +86,7 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
                   placeholder="발생처를 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.place}
+                  value={ledger ? ledger.place : form.place}
                 />
               </FormGroup>
               <FormGroup>
@@ -88,7 +97,7 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
                   placeholder="금액을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.amount}
+                  value={ledger ? ledger.amount : form.amount}
                 />
               </FormGroup>
             </>
@@ -149,7 +158,7 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
 
       <ModalFooter>
         <Button color="primary" onClick={onSubmit}>
-          저장
+          {ledger.ledger ? '수정' : '저장'}
         </Button>{' '}
         <Button color="secondary" onClick={onCancel}>
           취소

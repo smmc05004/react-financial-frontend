@@ -18,6 +18,11 @@ const [
   LEDGERLIST_SUCCESS,
   LEDGERLIST_FAILURE,
 ] = createRequestActionTypes('ledger/LEDGERLIST');
+const [
+  GET_LEDGER,
+  GET_LEDGER_SUCCESS,
+  GET_LEDGER_FAILURE,
+] = createRequestActionTypes('ledger/');
 
 export const initialField = createAction(INITIAL_FIELD);
 export const changeField = createAction(CHANGE_FIELD, ({ name, value }) => ({
@@ -40,13 +45,16 @@ export const ledgerList = createAction(LEDGERLIST, ({ pageNum, userId }) => ({
   pageNum,
   userId,
 }));
+export const getLedger = createAction(GET_LEDGER, ({ id }) => ({ id }));
 
 const addLedgerSaga = createRequestSaga(ADD_LEDGER, ledgerAPI.addLedger);
 const ledgerListSaga = createRequestSaga(LEDGERLIST, ledgerAPI.listLedgers);
+const getLedgerSaga = createRequestSaga(GET_LEDGER, ledgerAPI.getLedger);
 
 export function* ledgerSaga() {
   yield takeLatest(ADD_LEDGER, addLedgerSaga);
   yield takeLatest(LEDGERLIST, ledgerListSaga);
+  yield takeLatest(GET_LEDGER, getLedgerSaga);
 }
 
 const initialState = {
@@ -64,6 +72,11 @@ const initialState = {
     list: null,
     listError: null,
     totalCount: 0,
+  },
+
+  read: {
+    ledger: null,
+    readError: null,
   },
 };
 
@@ -92,10 +105,19 @@ const ledger = handleActions(
         draft['list']['list'] = list;
         draft['list']['totalCount'] = totalCount;
       }),
-
     [LEDGERLIST_FAILURE]: (state, { payload: listError }) =>
       produce(state, draft => {
         draft['list']['listError'] = listError;
+      }),
+
+    [GET_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
+      produce(state, draft => {
+        draft['read']['ledger'] = ledger;
+      }),
+    [GET_LEDGER_FAILURE]: (state, { payload: readError }) =>
+      produce(state, draft => {
+        draft['read']['ledger'] = null;
+        draft['read']['readError'] = readError;
       }),
   },
   initialState,

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const LedgerItem = ({ ledger }) => {
+const LedgerItem = ({ ledger, onTrClick }) => {
   return (
     <>
-      <tr>
+      <tr onClick={onTrClick}>
         <td>
           <input type="checkbox" value={ledger._id} />
         </td>

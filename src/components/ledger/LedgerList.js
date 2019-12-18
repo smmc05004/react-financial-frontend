@@ -16,6 +16,8 @@ const LedgerList = ({
   form,
   list,
   tempValue,
+  onTrClick,
+  ledger,
 }) => {
   return (
     <>
@@ -25,7 +27,7 @@ const LedgerList = ({
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
-        <LedgerItems list={list.list} />
+        <LedgerItems list={list.list} onTrClick={onTrClick} />
 
         <PaginationContainer
           totalCount={list.totalCount}
@@ -40,6 +42,7 @@ const LedgerList = ({
         modal={modal}
         form={form}
         type={form.type}
+        ledger={ledger}
       />
     </>
   );

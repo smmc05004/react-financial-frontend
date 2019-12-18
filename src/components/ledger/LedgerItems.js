@@ -2,7 +2,7 @@ import React from 'react';
 import LedgerItem from './LedgerItem';
 import { Table } from 'reactstrap';
 
-const LedgerItems = ({ list }) => {
+const LedgerItems = ({ list, onTrClick }) => {
   return (
     <>
       <div className="ledgerTable">
@@ -21,7 +21,11 @@ const LedgerItems = ({ list }) => {
           <tbody>
             {list &&
               list.map(ledger => (
-                <LedgerItem ledger={ledger} key={ledger._id} />
+                <LedgerItem
+                  ledger={ledger}
+                  key={ledger._id}
+                  onTrClick={() => onTrClick(ledger._id)}
+                />
               ))}
           </tbody>
         </Table>
