@@ -15,16 +15,11 @@ const LedgerListContainer = ({ location }) => {
   const [modal, setModal] = useState(false);
   const [tempValue, setTempValue] = useState(0);
 
-  const { type, form, user, ledger, ledgers, totalCount } = useSelector(
-    ({ ledger, user }) => ({
-      type: ledger.type,
-      form: ledger,
-      user: user.user,
-      ledger: ledger.ledger,
-      ledgers: ledger.ledgers,
-      totalCount: ledger.totalCount,
-    }),
-  );
+  const { form, user, list } = useSelector(({ ledger, user }) => ({
+    form: ledger.write,
+    user: user.user,
+    list: ledger.list,
+  }));
 
   const onInsert = () => {
     dispatch(initialField());
@@ -57,13 +52,15 @@ const LedgerListContainer = ({ location }) => {
     dispatch(addLedger({ type, category, title, place, amount, user }));
   };
 
+  // 등록시 성공하면 alert창 띄우고 modal 끔
   useEffect(() => {
-    if (ledger) {
+    if (form.writeResult) {
       alert('등록되었습니다.');
       setModal(!modal);
     }
-  }, [ledger, modal]);
+  }, [form.writeResult]);
 
+  // 쿼리스트링 요청시
   useEffect(() => {
     const { pageNum, userId } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
@@ -82,9 +79,7 @@ const LedgerListContainer = ({ location }) => {
       onSubmit={onSubmit}
       modal={modal}
       form={form}
-      type={type}
-      ledgers={ledgers}
-      totalCount={totalCount}
+      list={list}
       tempValue={tempValue}
     />
   );

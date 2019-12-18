@@ -14,10 +14,7 @@ const LedgerList = ({
   onSubmit,
   modal,
   form,
-  type,
-  ledgers,
-  totalCount,
-
+  list,
   tempValue,
 }) => {
   return (
@@ -28,9 +25,12 @@ const LedgerList = ({
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
-        <LedgerItems ledgers={ledgers} />
+        <LedgerItems list={list.list} />
 
-        <PaginationContainer totalCount={totalCount} tempValue={tempValue} />
+        <PaginationContainer
+          totalCount={list.totalCount}
+          tempValue={tempValue}
+        />
       </div>
 
       <LedgerModal
@@ -39,7 +39,7 @@ const LedgerList = ({
         onSubmit={onSubmit}
         modal={modal}
         form={form}
-        type={type}
+        type={form.type}
       />
     </>
   );

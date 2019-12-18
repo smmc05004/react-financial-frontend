@@ -148,7 +148,6 @@ const LedgerModal = ({ onChange, onCancel, onSubmit, modal, form, type }) => {
       </ModalBody>
 
       <ModalFooter>
-        {/* <Button color="primary" type="submit"> */}
         <Button color="primary" onClick={onSubmit}>
           저장
         </Button>{' '}

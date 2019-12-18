@@ -2,9 +2,7 @@ import React from 'react';
 import LedgerItem from './LedgerItem';
 import { Table } from 'reactstrap';
 
-const LedgerItems = ({ ledgers }) => {
-  //   console.log('가계부 리스트: ', ledgers);
-
+const LedgerItems = ({ list }) => {
   return (
     <>
       <div className="ledgerTable">
@@ -21,8 +19,8 @@ const LedgerItems = ({ ledgers }) => {
             </tr>
           </thead>
           <tbody>
-            {ledgers &&
-              ledgers.map(ledger => (
+            {list &&
+              list.map(ledger => (
                 <LedgerItem ledger={ledger} key={ledger._id} />
               ))}
           </tbody>

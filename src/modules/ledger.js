@@ -4,6 +4,8 @@ import createRequestSaga, {
 } from '../lib/createRequestSaga';
 import * as ledgerAPI from '../lib/api/ledger';
 import { takeLatest } from 'redux-saga/effects';
+import produce from 'immer';
+
 const INITIAL_FIELD = 'ledger/INITIAL_FIELD';
 const CHANGE_FIELD = 'ledger/CHANGE_FIELD';
 const [
@@ -48,18 +50,21 @@ export function* ledgerSaga() {
 }
 
 const initialState = {
-  type: '',
-  category: '',
-  title: '',
-  place: '',
-  amount: '',
+  write: {
+    type: 'expense',
+    category: '',
+    title: '',
+    place: '',
+    amount: '',
+    writeResult: null,
+    writeError: null,
+  },
 
-  ledger: null,
-  ledgerError: null,
-
-  ledgers: null,
-  ledgersError: null,
-  totalCount: 0,
+  list: {
+    list: null,
+    listError: null,
+    totalCount: 0,
+  },
 };
 
 const ledger = handleActions(
@@ -67,38 +72,31 @@ const ledger = handleActions(
     [INITIAL_FIELD]: state => ({
       ...state,
     }),
-    [CHANGE_FIELD]: (state, { payload: { name, value } }) => ({
-      ...state,
-      [name]: value,
-    }),
+    [CHANGE_FIELD]: (state, { payload: { name, value } }) =>
+      produce(state, draft => {
+        draft['write'][name] = value;
+      }),
 
-    [ADD_LEDGER_SUCCESS]: (state, { payload: ledger }) => ({
-      ...state,
-      ledger,
-    }),
-    [ADD_LEDGER_FAILURE]: (state, { payload: ledgerError }) => {
-      console.error('에러 발생: ', ledgerError);
-      return { ...state, ledger: null, ledgerError };
-    },
+    [ADD_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
+      produce(state, draft => {
+        draft['write']['writeResult'] = ledger;
+      }),
+    [ADD_LEDGER_FAILURE]: (state, { payload: ledgerError }) =>
+      produce(state, draft => {
+        draft['write']['writeResult'] = null;
+        draft['write']['writeError'] = ledgerError;
+      }),
 
-    // [LEDGERLIST_SUCCESS]: (state, { payload: ledgers }) => {
-    //   console.log('성공: ', ledgers);
-    //   return { ...state, ledgers };
-    // },
+    [LEDGERLIST_SUCCESS]: (state, { payload: { list, totalCount } }) =>
+      produce(state, draft => {
+        draft['list']['list'] = list;
+        draft['list']['totalCount'] = totalCount;
+      }),
 
-    [LEDGERLIST_SUCCESS]: (state, { payload: { ledgers, totalCount } }) => {
-      console.log('성공: ', ledgers, totalCount);
-      return { ...state, ledgers, totalCount };
-    },
-
-    [LEDGERLIST_FAILURE]: (state, { payload: ledgersError }) => {
-      console.log('실패: ', ledgersError);
-      return {
-        ...state,
-        ledgers: null,
-        ledgersError,
-      };
-    },
+    [LEDGERLIST_FAILURE]: (state, { payload: listError }) =>
+      produce(state, draft => {
+        draft['list']['listError'] = listError;
+      }),
   },
   initialState,
 );
