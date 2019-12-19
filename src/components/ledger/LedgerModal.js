@@ -21,11 +21,13 @@ const LedgerModal = ({
   type,
   ledger,
 }) => {
-  console.log('ledger', ledger);
+  // console.log('받은 값: ', ledger, form);
+
   return (
     <Modal isOpen={modal} toggle={onCancel}>
       <ModalHeader toggle={onCancel}>가계부 입력</ModalHeader>
       <ModalBody>
+        {}
         <Form>
           <FormGroup tag="fieldset">
             <FormGroup check>
@@ -35,7 +37,13 @@ const LedgerModal = ({
                   name="type"
                   onChange={onChange}
                   value="expense"
-                  defaultChecked
+                  defaultChecked={
+                    ledger !== null
+                      ? form.type === 'expense'
+                        ? true
+                        : false
+                      : false
+                  }
                 />{' '}
                 지출
               </Label>
@@ -46,6 +54,13 @@ const LedgerModal = ({
                   name="type"
                   onChange={onChange}
                   value="income"
+                  defaultChecked={
+                    ledger !== null
+                      ? form.type === 'income'
+                        ? true
+                        : false
+                      : false
+                  }
                 />{' '}
                 수입
               </Label>
@@ -75,7 +90,7 @@ const LedgerModal = ({
                   placeholder="제목을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={ledger ? ledger.title : form.title}
+                  value={form.title}
                 />
               </FormGroup>
               <FormGroup>
@@ -86,7 +101,7 @@ const LedgerModal = ({
                   placeholder="발생처를 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={ledger ? ledger.place : form.place}
+                  value={form.place}
                 />
               </FormGroup>
               <FormGroup>
@@ -97,7 +112,7 @@ const LedgerModal = ({
                   placeholder="금액을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={ledger ? ledger.amount : form.amount}
+                  value={form.amount}
                 />
               </FormGroup>
             </>

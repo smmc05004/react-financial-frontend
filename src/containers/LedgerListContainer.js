@@ -7,6 +7,8 @@ import {
   addLedger,
   ledgerList,
   getLedger,
+  emptyLedger,
+  updateLedger,
 } from '../modules/ledger';
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
@@ -40,6 +42,7 @@ const LedgerListContainer = ({ location }) => {
 
   const onCancel = e => {
     setModal(!modal);
+    dispatch(emptyLedger());
   };
 
   const onChange = e => {
@@ -50,18 +53,34 @@ const LedgerListContainer = ({ location }) => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const { type, category, title, place, amount } = form;
-    dispatch(addLedger({ type, category, title, place, amount, user }));
+    const { id, type, category, title, place, amount } = form;
+
+    // 입력 칸 비었는지 체크
+    if ([type, category, title, place, amount].includes('')) {
+      alert('입력칸을 모두 채워주세요');
+      return;
+    }
+
+    // 아이디가 있는 경우 수정, 그렇지 않으면 새로 저장
+    if (id) {
+      dispatch(
+        updateLedger({ id, type, category, title, place, amount, user }),
+      );
+    } else {
+      dispatch(addLedger({ type, category, title, place, amount, user }));
+    }
   };
 
   const onTrClick = id => {
     dispatch(getLedger({ id }));
+
+    setModal(!modal);
   };
 
   // 등록시 성공하면 alert창 띄우고 modal 끔
   useEffect(() => {
     if (form.writeResult) {
-      alert('등록되었습니다.');
+      alert('저장 되었습니다.');
       setModal(!modal);
     }
   }, [form.writeResult]);
@@ -77,7 +96,9 @@ const LedgerListContainer = ({ location }) => {
 
   // 리스트 클릭 시 해당 객체 가져오면 modal 오픈
   useEffect(() => {
-    setModal(!modal);
+    if (ledger.ledger) {
+      setModal(true);
+    }
   }, [ledger.ledger]);
 
   return (

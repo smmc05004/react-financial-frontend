@@ -20,3 +20,22 @@ export const listLedgers = ({ pageNum, userId }) => {
 };
 
 export const getLedger = ({ id }) => client.post('/api/ledger/read', { id });
+
+export const updateLedger = ({
+  id,
+  type,
+  category,
+  title,
+  place,
+  amount,
+  user,
+}) =>
+  client.post('/api/ledger/update', {
+    id,
+    type,
+    category,
+    title,
+    place,
+    amount,
+    user,
+  });
