@@ -18,6 +18,7 @@ const LedgerList = ({
   tempValue,
   onTrClick,
   ledger,
+  selectedType,
 }) => {
   return (
     <>
@@ -41,8 +42,8 @@ const LedgerList = ({
         onSubmit={onSubmit}
         modal={modal}
         form={form}
-        type={form.type}
         ledger={ledger}
+        selectedType={selectedType}
       />
     </>
   );

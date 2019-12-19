@@ -9,6 +9,7 @@ import produce from 'immer';
 const INITIAL_FIELD = 'ledger/INITIAL_FIELD';
 const CHANGE_FIELD = 'ledger/CHANGE_FIELD';
 const EMPTYLEDGER = 'ledger/EMPTYLEDGER';
+const SETSELECTEDTYPE = 'ledger/SETSELECTEDTYPE';
 
 const [
   ADD_LEDGER,
@@ -32,11 +33,16 @@ const [
 ] = createRequestActionTypes('ledger/UPDATE_LEDGER');
 
 export const initialField = createAction(INITIAL_FIELD);
-export const changeField = createAction(CHANGE_FIELD, ({ name, value }) => ({
-  name,
-  value,
-}));
+export const changeField = createAction(
+  CHANGE_FIELD,
+  ({ selectedType, name, value }) => ({
+    selectedType,
+    name,
+    value,
+  }),
+);
 export const emptyLedger = createAction(EMPTYLEDGER);
+export const setSelectedType = createAction(SETSELECTEDTYPE, value => value);
 
 export const addLedger = createAction(
   ADD_LEDGER,
@@ -84,12 +90,23 @@ export function* ledgerSaga() {
 
 const initialState = {
   write: {
-    id: '',
-    type: 'expense',
-    category: '',
-    title: '',
-    place: '',
-    amount: '',
+    expense: {
+      id: '',
+      type: 'expense',
+      category: '',
+      title: '',
+      place: '',
+      amount: '',
+    },
+    income: {
+      id: '',
+      type: 'income',
+      category: '',
+      title: '',
+      place: '',
+      amount: '',
+    },
+    selectedType: 'expense',
     writeResult: null,
     writeError: null,
   },
@@ -111,15 +128,20 @@ const ledger = handleActions(
     [INITIAL_FIELD]: state => ({
       ...state,
     }),
-    [CHANGE_FIELD]: (state, { payload: { name, value } }) =>
+    [CHANGE_FIELD]: (state, { payload: { selectedType, name, value } }) =>
       produce(state, draft => {
-        draft['write'][name] = value;
+        draft['write'][selectedType][name] = value;
       }),
 
     [EMPTYLEDGER]: state =>
       produce(state, draft => {
         draft['write'] = initialState['write'];
         draft['read']['ledger'] = null;
+      }),
+
+    [SETSELECTEDTYPE]: (state, { payload: value }) =>
+      produce(state, draft => {
+        draft['write']['selectedType'] = value;
       }),
 
     [ADD_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
@@ -144,12 +166,14 @@ const ledger = handleActions(
 
     [GET_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
       produce(state, draft => {
-        draft['write']['id'] = ledger._id;
-        draft['write']['type'] = ledger.type;
-        draft['write']['category'] = ledger.category;
-        draft['write']['title'] = ledger.title;
-        draft['write']['place'] = ledger.place;
-        draft['write']['amount'] = ledger.amount;
+        draft['write'][ledger.type]['id'] = ledger._id;
+        draft['write'][ledger.type]['type'] = ledger.type;
+        draft['write'][ledger.type]['category'] = ledger.category;
+        draft['write'][ledger.type]['title'] = ledger.title;
+        draft['write'][ledger.type]['place'] = ledger.place;
+        draft['write'][ledger.type]['amount'] = ledger.amount;
+
+        draft['write']['selectedType'] = ledger.type;
 
         draft['read']['ledger'] = ledger;
       }),

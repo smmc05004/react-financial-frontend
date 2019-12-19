@@ -18,16 +18,13 @@ const LedgerModal = ({
   onSubmit,
   modal,
   form,
-  type,
   ledger,
+  selectedType,
 }) => {
-  // console.log('받은 값: ', ledger, form);
-
   return (
     <Modal isOpen={modal} toggle={onCancel}>
       <ModalHeader toggle={onCancel}>가계부 입력</ModalHeader>
       <ModalBody>
-        {}
         <Form>
           <FormGroup tag="fieldset">
             <FormGroup check>
@@ -39,7 +36,7 @@ const LedgerModal = ({
                   value="expense"
                   defaultChecked={
                     ledger !== null
-                      ? form.type === 'expense'
+                      ? form.selectedType === 'expense'
                         ? true
                         : false
                       : false
@@ -56,7 +53,7 @@ const LedgerModal = ({
                   value="income"
                   defaultChecked={
                     ledger !== null
-                      ? form.type === 'income'
+                      ? form.selectedType === 'income'
                         ? true
                         : false
                       : false
@@ -66,7 +63,7 @@ const LedgerModal = ({
               </Label>
             </FormGroup>
           </FormGroup>
-          {type === 'income' ? (
+          {selectedType === 'expense' ? (
             <>
               <FormGroup>
                 <Label for="category">분류</Label>
@@ -74,56 +71,7 @@ const LedgerModal = ({
                   type="select"
                   name="category"
                   onChange={onChange}
-                  multiple
-                >
-                  <option value="salary">급여</option>
-                  <option value="bonus">보너스</option>
-                  <option value="finance">금융소득</option>
-                  <option value="else">기타</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Label for="title">용건</Label>
-                <Input
-                  type="text"
-                  name="title"
-                  placeholder="제목을 입력해 주세요"
-                  autoComplete="off"
-                  onChange={onChange}
-                  value={form.title}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="place">발생처</Label>
-                <Input
-                  type="text"
-                  name="place"
-                  placeholder="발생처를 입력해 주세요"
-                  autoComplete="off"
-                  onChange={onChange}
-                  value={form.place}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="amount">금액</Label>
-                <Input
-                  type="number"
-                  name="amount"
-                  placeholder="금액을 입력해 주세요"
-                  autoComplete="off"
-                  onChange={onChange}
-                  value={form.amount}
-                />
-              </FormGroup>
-            </>
-          ) : (
-            <>
-              <FormGroup>
-                <Label for="category">분류</Label>
-                <Input
-                  type="select"
-                  name="category"
-                  onChange={onChange}
+                  defaultValue={form.expense.category}
                   multiple
                 >
                   <option value="food">음식</option>
@@ -141,7 +89,7 @@ const LedgerModal = ({
                   placeholder="제목을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.title}
+                  value={form.expense.title}
                 />
               </FormGroup>
               <FormGroup>
@@ -152,7 +100,7 @@ const LedgerModal = ({
                   placeholder="사용처를 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.place}
+                  value={form.expense.place}
                 />
               </FormGroup>
               <FormGroup>
@@ -163,7 +111,58 @@ const LedgerModal = ({
                   placeholder="금액을 입력해 주세요"
                   autoComplete="off"
                   onChange={onChange}
-                  value={form.amount}
+                  value={form.expense.amount}
+                />
+              </FormGroup>
+            </>
+          ) : (
+            <>
+              <FormGroup>
+                <Label for="category">분류</Label>
+                <Input
+                  type="select"
+                  name="category"
+                  onChange={onChange}
+                  multiple
+                  defaultValue={form.income.category}
+                >
+                  <option value="salary">급여</option>
+                  <option value="bonus">보너스</option>
+                  <option value="finance">금융소득</option>
+                  <option value="else">기타</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="title">용건</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  placeholder="제목을 입력해 주세요"
+                  autoComplete="off"
+                  onChange={onChange}
+                  value={form.income.title}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="place">발생처</Label>
+                <Input
+                  type="text"
+                  name="place"
+                  placeholder="발생처를 입력해 주세요"
+                  autoComplete="off"
+                  onChange={onChange}
+                  value={form.income.place}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="amount">금액</Label>
+                <Input
+                  type="number"
+                  name="amount"
+                  placeholder="금액을 입력해 주세요"
+                  autoComplete="off"
+                  onChange={onChange}
+                  value={form.income.amount}
                 />
               </FormGroup>
             </>

@@ -9,6 +9,7 @@ import {
   getLedger,
   emptyLedger,
   updateLedger,
+  setSelectedType,
 } from '../modules/ledger';
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
@@ -18,12 +19,15 @@ const LedgerListContainer = ({ location }) => {
   const [modal, setModal] = useState(false);
   const [tempValue, setTempValue] = useState(0);
 
-  const { form, user, list, ledger } = useSelector(({ ledger, user }) => ({
-    form: ledger.write,
-    user: user.user,
-    list: ledger.list,
-    ledger: ledger.read,
-  }));
+  const { form, selectedType, user, list, ledger } = useSelector(
+    ({ ledger, user }) => ({
+      form: ledger.write,
+      selectedType: ledger.write.selectedType,
+      user: user.user,
+      list: ledger.list,
+      ledger: ledger.read,
+    }),
+  );
 
   const onInsert = () => {
     dispatch(initialField());
@@ -47,13 +51,18 @@ const LedgerListContainer = ({ location }) => {
 
   const onChange = e => {
     const { name, value } = e.target;
-    dispatch(changeField({ name, value }));
+
+    if (name === 'type') {
+      dispatch(setSelectedType(value));
+    } else {
+      dispatch(changeField({ selectedType, name, value }));
+    }
   };
 
   const onSubmit = e => {
     e.preventDefault();
 
-    const { id, type, category, title, place, amount } = form;
+    const { id, type, category, title, place, amount } = form[selectedType];
 
     // 입력 칸 비었는지 체크
     if ([type, category, title, place, amount].includes('')) {
@@ -115,6 +124,7 @@ const LedgerListContainer = ({ location }) => {
       tempValue={tempValue}
       onTrClick={onTrClick}
       ledger={ledger}
+      selectedType={form.selectedType}
     />
   );
 };
