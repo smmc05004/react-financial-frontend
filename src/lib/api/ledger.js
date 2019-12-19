@@ -1,13 +1,22 @@
 import client from './client';
 import qs from 'qs';
 
-export const addLedger = ({ type, category, title, place, amount, user }) =>
+export const addLedger = ({
+  type,
+  category,
+  title,
+  place,
+  amount,
+  date,
+  user,
+}) =>
   client.post('/api/ledger/add', {
     type,
     category,
     title,
     place,
     amount,
+    date,
     user,
   });
 
@@ -28,6 +37,7 @@ export const updateLedger = ({
   title,
   place,
   amount,
+  date,
   user,
 }) =>
   client.post('/api/ledger/update', {
@@ -37,5 +47,6 @@ export const updateLedger = ({
     title,
     place,
     amount,
+    date,
     user,
   });

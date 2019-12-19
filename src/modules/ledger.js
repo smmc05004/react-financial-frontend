@@ -46,12 +46,13 @@ export const setSelectedType = createAction(SETSELECTEDTYPE, value => value);
 
 export const addLedger = createAction(
   ADD_LEDGER,
-  ({ type, category, title, place, amount, user }) => ({
+  ({ type, category, title, place, amount, date, user }) => ({
     type,
     category,
     title,
     place,
     amount,
+    date,
     user,
   }),
 );
@@ -62,13 +63,14 @@ export const ledgerList = createAction(LEDGERLIST, ({ pageNum, userId }) => ({
 export const getLedger = createAction(GET_LEDGER, ({ id }) => ({ id }));
 export const updateLedger = createAction(
   UPDATE_LEDGER,
-  ({ id, type, category, title, place, amount, user }) => ({
+  ({ id, type, category, title, place, amount, date, user }) => ({
     id,
     type,
     category,
     title,
     place,
     amount,
+    date,
     user,
   }),
 );
@@ -97,6 +99,7 @@ const initialState = {
       title: '',
       place: '',
       amount: '',
+      date: '',
     },
     income: {
       id: '',
@@ -105,6 +108,7 @@ const initialState = {
       title: '',
       place: '',
       amount: '',
+      date: '',
     },
     selectedType: 'expense',
     writeResult: null,
@@ -172,6 +176,7 @@ const ledger = handleActions(
         draft['write'][ledger.type]['title'] = ledger.title;
         draft['write'][ledger.type]['place'] = ledger.place;
         draft['write'][ledger.type]['amount'] = ledger.amount;
+        draft['write'][ledger.type]['date'] = ledger.date;
 
         draft['write']['selectedType'] = ledger.type;
 

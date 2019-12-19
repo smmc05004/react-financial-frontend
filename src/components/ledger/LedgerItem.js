@@ -10,7 +10,7 @@ const LedgerItem = ({ ledger, onTrClick }) => {
         <td>{ledger.type}</td>
         <td>{ledger.category}</td>
         <td>{ledger.amount}</td>
-        <td>2019-12-16</td>
+        <td>{ledger.date}</td>
       </tr>
     </>
   );

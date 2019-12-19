@@ -62,10 +62,12 @@ const LedgerListContainer = ({ location }) => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const { id, type, category, title, place, amount } = form[selectedType];
+    const { id, type, category, title, place, amount, date } = form[
+      selectedType
+    ];
 
     // 입력 칸 비었는지 체크
-    if ([type, category, title, place, amount].includes('')) {
+    if ([type, category, title, place, amount, date].includes('')) {
       alert('입력칸을 모두 채워주세요');
       return;
     }
@@ -73,10 +75,10 @@ const LedgerListContainer = ({ location }) => {
     // 아이디가 있는 경우 수정, 그렇지 않으면 새로 저장
     if (id) {
       dispatch(
-        updateLedger({ id, type, category, title, place, amount, user }),
+        updateLedger({ id, type, category, title, place, amount, date, user }),
       );
     } else {
-      dispatch(addLedger({ type, category, title, place, amount, user }));
+      dispatch(addLedger({ type, category, title, place, amount, date, user }));
     }
   };
 

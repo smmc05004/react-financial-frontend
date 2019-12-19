@@ -114,6 +114,15 @@ const LedgerModal = ({
                   value={form.expense.amount}
                 />
               </FormGroup>
+              <FormGroup>
+                <Label for="date">날짜</Label>
+                <Input
+                  type="date"
+                  name="date"
+                  onChange={onChange}
+                  value={form.expense.date}
+                />
+              </FormGroup>
             </>
           ) : (
             <>
@@ -163,6 +172,15 @@ const LedgerModal = ({
                   autoComplete="off"
                   onChange={onChange}
                   value={form.income.amount}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="date">날짜</Label>
+                <Input
+                  type="date"
+                  name="date"
+                  onChange={onChange}
+                  value={form.income.date}
                 />
               </FormGroup>
             </>
