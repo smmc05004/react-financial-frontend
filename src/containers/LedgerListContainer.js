@@ -126,9 +126,6 @@ const LedgerListContainer = ({ location, history }) => {
 
   // 쿼리스트링 요청시
   useEffect(() => {
-    console.log('url 바뀜 감지');
-
-    console.log('location: ', location);
     const { pageNum, userId, period } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });

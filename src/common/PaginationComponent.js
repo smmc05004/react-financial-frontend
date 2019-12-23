@@ -10,7 +10,6 @@ const PaginationComponent = ({ pagination, userId, period }) => {
   for (let i = pagination.startPage; i <= pagination.endPage; i++) {
     numberArr.push(i);
   }
-  console.log('현페: ', currentPage);
   return (
     <div className="pagination">
       <Pagination size="sm" aria-label="Page navigation example">
