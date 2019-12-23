@@ -71,7 +71,7 @@ const LedgerModal = ({
                   type="select"
                   name="category"
                   onChange={onChange}
-                  defaultValue={form.expense.category}
+                  // defaultValue={form.expense.category}
                   multiple
                 >
                   <option value="food">음식</option>
@@ -133,7 +133,7 @@ const LedgerModal = ({
                   name="category"
                   onChange={onChange}
                   multiple
-                  defaultValue={form.income.category}
+                  // defaultValue={form.income.category}
                 >
                   <option value="salary">급여</option>
                   <option value="bonus">보너스</option>

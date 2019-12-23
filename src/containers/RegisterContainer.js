@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import RegisterForm from '../components/auth/RegisterForm';
 import { useSelector, useDispatch } from 'react-redux';
 import {

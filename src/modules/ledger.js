@@ -10,6 +10,7 @@ const INITIAL_FIELD = 'ledger/INITIAL_FIELD';
 const CHANGE_FIELD = 'ledger/CHANGE_FIELD';
 const EMPTYLEDGER = 'ledger/EMPTYLEDGER';
 const SETSELECTEDTYPE = 'ledger/SETSELECTEDTYPE';
+const SET_PERIOD = 'date/SET_PERIOD';
 
 const [
   ADD_LEDGER,
@@ -43,6 +44,9 @@ export const changeField = createAction(
 );
 export const emptyLedger = createAction(EMPTYLEDGER);
 export const setSelectedType = createAction(SETSELECTEDTYPE, value => value);
+export const setPeriod = createAction(SET_PERIOD, ({ period }) => ({
+  period,
+}));
 
 export const addLedger = createAction(
   ADD_LEDGER,
@@ -56,10 +60,16 @@ export const addLedger = createAction(
     user,
   }),
 );
-export const ledgerList = createAction(LEDGERLIST, ({ pageNum, userId }) => ({
-  pageNum,
-  userId,
-}));
+
+export const ledgerList = createAction(
+  LEDGERLIST,
+  ({ pageNum, userId, period }) => ({
+    pageNum,
+    userId,
+    period,
+  }),
+);
+
 export const getLedger = createAction(GET_LEDGER, ({ id }) => ({ id }));
 export const updateLedger = createAction(
   UPDATE_LEDGER,
@@ -119,6 +129,7 @@ const initialState = {
     list: null,
     listError: null,
     totalCount: 0,
+    period: '',
   },
 
   read: {
@@ -148,6 +159,11 @@ const ledger = handleActions(
         draft['write']['selectedType'] = value;
       }),
 
+    [SET_PERIOD]: (state, { payload: { period } }) =>
+      produce(state, draft => {
+        draft['list']['period'] = period;
+      }),
+
     [ADD_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
       produce(state, draft => {
         draft['write']['writeResult'] = ledger;
@@ -168,21 +184,23 @@ const ledger = handleActions(
         draft['list']['listError'] = listError;
       }),
 
-    [GET_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
-      produce(state, draft => {
+    [GET_LEDGER_SUCCESS]: (state, { payload: ledger }) => {
+      const localizedDate = ledger.date.substring(0, 10);
+
+      return produce(state, draft => {
         draft['write'][ledger.type]['id'] = ledger._id;
         draft['write'][ledger.type]['type'] = ledger.type;
         draft['write'][ledger.type]['category'] = ledger.category;
         draft['write'][ledger.type]['title'] = ledger.title;
         draft['write'][ledger.type]['place'] = ledger.place;
         draft['write'][ledger.type]['amount'] = ledger.amount;
-        draft['write'][ledger.type]['date'] = ledger.date;
+        draft['write'][ledger.type]['date'] = localizedDate;
 
         draft['write']['selectedType'] = ledger.type;
 
         draft['read']['ledger'] = ledger;
-      }),
-
+      });
+    },
     [GET_LEDGER_FAILURE]: (state, { payload: readError }) =>
       produce(state, draft => {
         draft['read']['ledger'] = null;

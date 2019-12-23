@@ -1,8 +1,9 @@
 import React from 'react';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Pagination, PaginationItem } from 'reactstrap';
 import './PaginationComponent.css';
 
-const PaginationComponent = ({ pagination, userId }) => {
+const PaginationComponent = ({ pagination, userId, period }) => {
   const { currentPage, lastPage } = pagination;
 
   const numberArr = [];
@@ -15,27 +16,40 @@ const PaginationComponent = ({ pagination, userId }) => {
       <Pagination size="sm" aria-label="Page navigation example">
         {currentPage === 1 ? null : (
           <PaginationItem>
-            <PaginationLink
-              previous
-              href={`/ledger?pageNum=${currentPage - 1}&userId=${userId}`}
-            />
+            <Link
+              to={`/ledger/write?pageNum=${currentPage -
+                1}&userId=${userId}&period=${period}`}
+              className="page-link"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">‹</span>
+              <span className="sr-only">Previous</span>
+            </Link>
           </PaginationItem>
         )}
 
         {numberArr.map(number => (
-          <PaginationItem key={number}>
-            <PaginationLink href={`/ledger?pageNum=${number}&userId=${userId}`}>
+          <PaginationItem key={number} active={number === currentPage}>
+            <Link
+              to={`/ledger/write?pageNum=${number}&userId=${userId}&period=${period}`}
+              className="page-link"
+            >
               {number}
-            </PaginationLink>
+            </Link>
           </PaginationItem>
         ))}
 
         {currentPage === lastPage ? null : (
           <PaginationItem>
-            <PaginationLink
-              next
-              href={`/ledger?pageNum=${currentPage + 1}&userId=${userId}`}
-            />
+            <Link
+              to={`/ledger/write?pageNum=${currentPage +
+                1}&userId=${userId}&period=${period}`}
+              className="page-link"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">›</span>
+              <span className="sr-only">Next</span>
+            </Link>
           </PaginationItem>
         )}
       </Pagination>

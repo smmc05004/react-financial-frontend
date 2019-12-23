@@ -6,9 +6,29 @@
 }
 
 .logo {
+  width: 15%;
+  height: 100%;
   float: left;
+  padding: 10px;
+}
+
+.HeaderWrapper .menuUl {
+  width: 70%;
+  height: 100%;
+  list-style: none;
+  float: right;
+  margin: 0px;
+  padding: 10px;
+}
+
+.HeaderWrapper .menuLi {
+  width: 100px;
+  height: 100%;
 }
 
 .headerRight {
+  width: 15%;
+  height: 100%;
   float: right;
+  padding: 10px;
 }

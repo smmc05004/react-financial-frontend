@@ -20,10 +20,11 @@ export const addLedger = ({
     user,
   });
 
-export const listLedgers = ({ pageNum, userId }) => {
+export const listLedgers = ({ pageNum, userId, period }) => {
   const queryString = qs.stringify({
     pageNum,
     userId,
+    period,
   });
   return client.get(`/api/ledger/lists?${queryString}`);
 };

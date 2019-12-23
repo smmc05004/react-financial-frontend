@@ -4,6 +4,7 @@ import LedgerItems from './LedgerItems';
 import LedgerModal from './LedgerModal';
 import PaginationContainer from '../../containers/PaginationContainer';
 import './LedgerList.css';
+import YearMonth from '../../common/YearMonth';
 
 const LedgerList = ({
   onInsert,
@@ -19,10 +20,14 @@ const LedgerList = ({
   onTrClick,
   ledger,
   selectedType,
+  onChangePeriod,
+  period,
 }) => {
   return (
     <>
       <div className="ledgerList">
+        <YearMonth onChangePeriod={onChangePeriod} period={period} />
+
         <CrudBtnBundle
           onInsert={onInsert}
           onUpdate={onUpdate}
@@ -33,6 +38,7 @@ const LedgerList = ({
         <PaginationContainer
           totalCount={list.totalCount}
           tempValue={tempValue}
+          period={period}
         />
       </div>
 

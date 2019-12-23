@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PaginationComponent from '../common/PaginationComponent';
-import { setPagenation, setCurrentPage } from '../modules/pagination';
+import { setPagenation } from '../modules/pagination';
 
-const PaginationContainer = ({ totalCount, tempValue }) => {
+const PaginationContainer = ({ totalCount, tempValue, period }) => {
   const dispatch = useDispatch();
 
   let { pagination, userId } = useSelector(({ pagination, user }) => ({
@@ -30,7 +30,13 @@ const PaginationContainer = ({ totalCount, tempValue }) => {
     dispatch(setPagenation({ currentPage, endPage, startPage, lastPage }));
   }, [dispatch, totalCount, tempValue]);
 
-  return <PaginationComponent userId={userId} pagination={pagination} />;
+  return (
+    <PaginationComponent
+      userId={userId}
+      pagination={pagination}
+      period={period}
+    />
+  );
 };
 
 export default PaginationContainer;
