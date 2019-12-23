@@ -10,23 +10,21 @@ const PaginationComponent = ({ pagination, userId, period }) => {
   for (let i = pagination.startPage; i <= pagination.endPage; i++) {
     numberArr.push(i);
   }
-
+  console.log('현페: ', currentPage);
   return (
     <div className="pagination">
       <Pagination size="sm" aria-label="Page navigation example">
-        {currentPage === 1 ? null : (
-          <PaginationItem>
-            <Link
-              to={`/ledger/write?pageNum=${currentPage -
-                1}&userId=${userId}&period=${period}`}
-              className="page-link"
-              aria-label="Previous"
-            >
-              <span aria-hidden="true">‹</span>
-              <span className="sr-only">Previous</span>
-            </Link>
-          </PaginationItem>
-        )}
+        <PaginationItem disabled={currentPage === 1}>
+          <Link
+            to={`/ledger/write?pageNum=${currentPage -
+              1}&userId=${userId}&period=${period}`}
+            className="page-link"
+            aria-label="Previous"
+          >
+            <span aria-hidden="true">‹</span>
+            <span className="sr-only">Previous</span>
+          </Link>
+        </PaginationItem>
 
         {numberArr.map(number => (
           <PaginationItem key={number} active={number === currentPage}>
@@ -39,19 +37,17 @@ const PaginationComponent = ({ pagination, userId, period }) => {
           </PaginationItem>
         ))}
 
-        {currentPage === lastPage ? null : (
-          <PaginationItem>
-            <Link
-              to={`/ledger/write?pageNum=${currentPage +
-                1}&userId=${userId}&period=${period}`}
-              className="page-link"
-              aria-label="Next"
-            >
-              <span aria-hidden="true">›</span>
-              <span className="sr-only">Next</span>
-            </Link>
-          </PaginationItem>
-        )}
+        <PaginationItem disabled={currentPage === lastPage}>
+          <Link
+            to={`/ledger/write?pageNum=${currentPage +
+              1}&userId=${userId}&period=${period}`}
+            className="page-link"
+            aria-label="Next"
+          >
+            <span aria-hidden="true">›</span>
+            <span className="sr-only">Next</span>
+          </Link>
+        </PaginationItem>
       </Pagination>
     </div>
   );
