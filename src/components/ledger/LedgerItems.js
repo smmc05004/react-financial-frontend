@@ -2,7 +2,7 @@ import React from 'react';
 import LedgerItem from './LedgerItem';
 import { Table } from 'reactstrap';
 
-const LedgerItems = ({ list, onTrClick }) => {
+const LedgerItems = ({ list, onTrClick, onCheckBoxChange }) => {
   return (
     <>
       <div className="ledgerTable">
@@ -10,7 +10,7 @@ const LedgerItems = ({ list, onTrClick }) => {
           <thead>
             <tr>
               <th>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={onCheckBoxChange} />
               </th>
               <th>분류</th>
               <th>제목</th>
@@ -24,7 +24,9 @@ const LedgerItems = ({ list, onTrClick }) => {
                 <LedgerItem
                   ledger={ledger}
                   key={ledger._id}
-                  onTrClick={() => onTrClick(ledger._id)}
+                  // onTrClick={() => onTrClick(ledger._id)}
+                  onTrClick={onTrClick}
+                  onCheckBoxChange={onCheckBoxChange}
                 />
               ))}
           </tbody>

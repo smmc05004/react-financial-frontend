@@ -28,6 +28,8 @@ const LedgerListContainer = ({ location, history }) => {
   const [modal, setModal] = useState(false);
   const [tempValue, setTempValue] = useState(0);
 
+  const checkBoxArr = [];
+
   const { form, selectedType, user, list, ledger, period } = useSelector(
     ({ ledger, user }) => ({
       form: ledger.write,
@@ -141,12 +143,25 @@ const LedgerListContainer = ({ location, history }) => {
     }
   }, [ledger.ledger]);
 
+  // 기간 변경 이벤트
   const onChangePeriod = e => {
     const { value } = e.target;
     dispatch(setPeriod({ period: value }));
     history.push(
       `/ledger/write?pageNum=1&userId=${user.userId}&period=${value}`,
     );
+  };
+
+  // 체크박스 클릭 이벤트
+  const onCheckBoxChange = e => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      checkBoxArr.push(value);
+    } else {
+      const checkedIndex = checkBoxArr.indexOf(value);
+      checkBoxArr.splice(checkedIndex, 1);
+    }
   };
 
   return (
@@ -166,6 +181,7 @@ const LedgerListContainer = ({ location, history }) => {
       selectedType={form.selectedType}
       onChangePeriod={onChangePeriod}
       period={period}
+      onCheckBoxChange={onCheckBoxChange}
     />
   );
 };

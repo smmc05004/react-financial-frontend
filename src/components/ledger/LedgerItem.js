@@ -1,16 +1,18 @@
 import React from 'react';
 
-const LedgerItem = ({ ledger, onTrClick }) => {
+const LedgerItem = ({ ledger, onTrClick, onCheckBoxChange }) => {
   return (
     <>
-      <tr onClick={onTrClick}>
-        <td>
+      <tr>
+        <td onClick={onCheckBoxChange}>
           <input type="checkbox" value={ledger._id} />
         </td>
-        <td>{ledger.type}</td>
-        <td>{ledger.category}</td>
-        <td>{ledger.amount}</td>
-        <td>{ledger.date.substring(0, 10)}</td>
+        <td onClick={() => onTrClick(ledger._id)}>{ledger.type}</td>
+        <td onClick={() => onTrClick(ledger._id)}>{ledger.category}</td>
+        <td onClick={() => onTrClick(ledger._id)}>{ledger.amount}</td>
+        <td onClick={() => onTrClick(ledger._id)}>
+          {ledger.date.substring(0, 10)}
+        </td>
       </tr>
     </>
   );

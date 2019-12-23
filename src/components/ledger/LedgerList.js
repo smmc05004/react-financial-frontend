@@ -22,6 +22,7 @@ const LedgerList = ({
   selectedType,
   onChangePeriod,
   period,
+  onCheckBoxChange,
 }) => {
   return (
     <>
@@ -33,7 +34,11 @@ const LedgerList = ({
           onUpdate={onUpdate}
           onDelete={onDelete}
         />
-        <LedgerItems list={list.list} onTrClick={onTrClick} />
+        <LedgerItems
+          list={list.list}
+          onTrClick={onTrClick}
+          onCheckBoxChange={onCheckBoxChange}
+        />
 
         <PaginationContainer
           totalCount={list.totalCount}
