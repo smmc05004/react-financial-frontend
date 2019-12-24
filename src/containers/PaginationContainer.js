@@ -31,7 +31,12 @@ const PaginationContainer = ({ totalCount, tempValue, period }) => {
   }, [dispatch, totalCount, tempValue]);
 
   return (
-    <PaginationComponent user={user} pagination={pagination} period={period} />
+    <PaginationComponent
+      user={user}
+      pagination={pagination}
+      period={period}
+      totalCount={totalCount}
+    />
   );
 };
 

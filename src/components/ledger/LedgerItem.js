@@ -8,7 +8,7 @@ const LedgerItem = ({ ledger, onTrClick, onCheckBoxChange }) => {
           <input type="checkbox" value={ledger._id} />
         </td>
         <td onClick={() => onTrClick(ledger._id)}>{ledger.type}</td>
-        <td onClick={() => onTrClick(ledger._id)}>{ledger.category}</td>
+        <td onClick={() => onTrClick(ledger._id)}>{ledger.title}</td>
         <td
           onClick={() => onTrClick(ledger._id)}
           className={ledger.type === 'expense' ? 'red' : 'blue'}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Pagination, PaginationItem } from 'reactstrap';
 import './PaginationComponent.css';
 
-const PaginationComponent = ({ pagination, user, period }) => {
+const PaginationComponent = ({ pagination, user, period, totalCount }) => {
   const { currentPage, lastPage } = pagination;
 
   const numberArr = [];
@@ -12,7 +12,7 @@ const PaginationComponent = ({ pagination, user, period }) => {
   }
   return (
     <div className="pagination">
-      {user && (
+      {user && totalCount > 0 && (
         <Pagination size="sm" aria-label="Page navigation example">
           <PaginationItem disabled={currentPage === 1}>
             <Link
