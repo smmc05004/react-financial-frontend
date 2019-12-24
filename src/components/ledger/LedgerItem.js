@@ -9,7 +9,12 @@ const LedgerItem = ({ ledger, onTrClick, onCheckBoxChange }) => {
         </td>
         <td onClick={() => onTrClick(ledger._id)}>{ledger.type}</td>
         <td onClick={() => onTrClick(ledger._id)}>{ledger.category}</td>
-        <td onClick={() => onTrClick(ledger._id)}>{ledger.amount}</td>
+        <td
+          onClick={() => onTrClick(ledger._id)}
+          className={ledger.type === 'expense' ? 'red' : 'blue'}
+        >
+          {ledger.amount}
+        </td>
         <td onClick={() => onTrClick(ledger._id)}>
           {ledger.date.substring(0, 10)}
         </td>

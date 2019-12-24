@@ -67,3 +67,11 @@
   background-color: #dcdcdc;
   cursor: pointer;
 }
+
+.ledgerTable table .red {
+  color: red;
+}
+
+.ledgerTable table .blue {
+  color: blue;
+}
