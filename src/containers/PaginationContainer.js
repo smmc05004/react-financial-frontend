@@ -6,9 +6,9 @@ import { setPagenation } from '../modules/pagination';
 const PaginationContainer = ({ totalCount, tempValue, period }) => {
   const dispatch = useDispatch();
 
-  let { pagination, userId } = useSelector(({ pagination, user }) => ({
+  let { pagination, user } = useSelector(({ pagination, user }) => ({
     pagination,
-    userId: user.user.userId,
+    user: user.user,
   }));
 
   useEffect(() => {
@@ -31,11 +31,7 @@ const PaginationContainer = ({ totalCount, tempValue, period }) => {
   }, [dispatch, totalCount, tempValue]);
 
   return (
-    <PaginationComponent
-      userId={userId}
-      pagination={pagination}
-      period={period}
-    />
+    <PaginationComponent user={user} pagination={pagination} period={period} />
   );
 };
 

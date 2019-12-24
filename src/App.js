@@ -10,9 +10,9 @@ import LedgerAnalysisPage from './pages/LedgerAnalysisPage';
 const App = () => {
   return (
     <>
-      <Route path="/" component={MainPage} exact />
+      {/* <Route path="/" component={MainPage} exact /> */}
+      <Route path="/" component={LoginPage} exact={true} />
       <Route path="/register" component={RegisterPage} />
-      <Route path="/login" component={LoginPage} />
       <Route path="/ledger/write" component={LedgerWritePage} />
       <Route path="/ledger/analysis" component={LedgerAnalysisPage} />
     </>

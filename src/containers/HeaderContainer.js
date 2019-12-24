@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../common/Header';
 import { logout } from '../modules/user';
@@ -18,6 +18,11 @@ const HeaderContiner = ({ history }) => {
     history.push('/login');
   };
 
+  useEffect(() => {
+    if (user === null) {
+      history.push('/');
+    }
+  }, [user, history]);
   return <Header user={user} onLogout={onLogout} onClick={onClick} />;
 };
 

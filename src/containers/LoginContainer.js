@@ -5,6 +5,14 @@ import { initializeForm, changeValue, login } from '../modules/auth';
 import { withRouter } from 'react-router-dom';
 import { check } from '../modules/user';
 
+function getDefaultPeriod() {
+  const today = new Date();
+  const yy = today.getFullYear();
+  const mm = today.getMonth() + 1;
+
+  return `${yy}-${mm}`;
+}
+
 const LoginContainer = ({ history }) => {
   const dispatch = useDispatch();
   const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
@@ -31,7 +39,10 @@ const LoginContainer = ({ history }) => {
 
   useEffect(() => {
     if (user) {
-      history.push('/');
+      const period = getDefaultPeriod();
+      history.push(
+        `/ledger/write?pageNum=1&userId=${user.userId}&period=${period}`,
+      );
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {
