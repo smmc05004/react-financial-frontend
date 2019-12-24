@@ -11,6 +11,7 @@ import {
   updateLedger,
   setSelectedType,
   setPeriod,
+  removeLedger,
 } from '../modules/ledger';
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
@@ -28,18 +29,26 @@ const LedgerListContainer = ({ location, history }) => {
   const [modal, setModal] = useState(false);
   const [tempValue, setTempValue] = useState(0);
 
-  const checkBoxArr = [];
+  // 삭제위해 클릭한 id array
+  const idArr = [];
 
-  const { form, selectedType, user, list, ledger, period } = useSelector(
-    ({ ledger, user }) => ({
-      form: ledger.write,
-      selectedType: ledger.write.selectedType,
-      user: user.user,
-      list: ledger.list,
-      ledger: ledger.read,
-      period: ledger.list.period,
-    }),
-  );
+  const {
+    form,
+    selectedType,
+    user,
+    list,
+    ledger,
+    period,
+    removed,
+  } = useSelector(({ ledger, user }) => ({
+    form: ledger.write,
+    selectedType: ledger.write.selectedType,
+    user: user.user,
+    list: ledger.list,
+    ledger: ledger.read,
+    period: ledger.list.period,
+    removed: ledger.remove,
+  }));
 
   // 입력 버튼 함수
   const onInsert = () => {
@@ -56,6 +65,7 @@ const LedgerListContainer = ({ location, history }) => {
   // 가계부 삭제 버튼 함수
   const onDelete = () => {
     console.log('삭제 클릭');
+    dispatch(removeLedger({ idArr }));
   };
 
   // 가계부 취소 버튼 함수
@@ -124,7 +134,7 @@ const LedgerListContainer = ({ location, history }) => {
     dispatch(setPeriod({ period: defaultPeriod }));
   }, [dispatch]);
 
-  // 등록, 수정시 성공하면 alert창 띄우고 modal 끔
+  // 등록, 수정, 삭제시 성공하면 alert창 띄우고 modal 끔
   useEffect(() => {
     if (form.writeResult) {
       alert('저장 되었습니다.');
@@ -155,7 +165,13 @@ const LedgerListContainer = ({ location, history }) => {
           form.updateResult.date}`,
       );
     }
-  }, [form.writeResult, form.updateResult]);
+
+    if (removed.removeResult) {
+      history.push(
+        `/ledger/write?pageNum=${tempValue}&userId=${user.userId}&period=${period}&removeResult=${removed.removeResult}`,
+      );
+    }
+  }, [form.writeResult, form.updateResult, removed.removeResult]);
 
   // 쿼리스트링 요청시
   useEffect(() => {
@@ -188,10 +204,10 @@ const LedgerListContainer = ({ location, history }) => {
     const { value, checked } = e.target;
 
     if (checked) {
-      checkBoxArr.push(value);
+      idArr.push(value);
     } else {
-      const checkedIndex = checkBoxArr.indexOf(value);
-      checkBoxArr.splice(checkedIndex, 1);
+      const checkedIndex = idArr.indexOf(value);
+      idArr.splice(checkedIndex, 1);
     }
   };
 

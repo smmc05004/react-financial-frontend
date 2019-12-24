@@ -55,3 +55,6 @@ export const updateLedger = ({
     use,
     user,
   });
+
+export const removeLedger = ({ idArr }) =>
+  client.post('/api/ledger/remove', { idArr });

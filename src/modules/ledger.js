@@ -33,6 +33,12 @@ const [
   UPDATE_LEDGER_FAILURE,
 ] = createRequestActionTypes('ledger/UPDATE_LEDGER');
 
+const [
+  REMOVE_LEDGER,
+  REMOVE_LEDGER_SUCCESS,
+  REMOVE_LEDGER_FAILURE,
+] = createRequestActionTypes('ledger/REMOVE_LEDGER');
+
 export const initialField = createAction(INITIAL_FIELD);
 export const changeField = createAction(
   CHANGE_FIELD,
@@ -86,6 +92,10 @@ export const updateLedger = createAction(
   }),
 );
 
+export const removeLedger = createAction(REMOVE_LEDGER, ({ idArr }) => ({
+  idArr,
+}));
+
 const addLedgerSaga = createRequestSaga(ADD_LEDGER, ledgerAPI.addLedger);
 const ledgerListSaga = createRequestSaga(LEDGERLIST, ledgerAPI.listLedgers);
 const getLedgerSaga = createRequestSaga(GET_LEDGER, ledgerAPI.getLedger);
@@ -93,12 +103,17 @@ const updateLedgerSaga = createRequestSaga(
   UPDATE_LEDGER,
   ledgerAPI.updateLedger,
 );
+const removeLedgerSaga = createRequestSaga(
+  REMOVE_LEDGER,
+  ledgerAPI.removeLedger,
+);
 
 export function* ledgerSaga() {
   yield takeLatest(ADD_LEDGER, addLedgerSaga);
   yield takeLatest(LEDGERLIST, ledgerListSaga);
   yield takeLatest(GET_LEDGER, getLedgerSaga);
   yield takeLatest(UPDATE_LEDGER, updateLedgerSaga);
+  yield takeLatest(REMOVE_LEDGER, removeLedgerSaga);
 }
 
 const initialState = {
@@ -140,6 +155,11 @@ const initialState = {
   read: {
     ledger: null,
     readError: null,
+  },
+
+  remove: {
+    removeResult: null,
+    removeError: null,
   },
 };
 
@@ -226,6 +246,17 @@ const ledger = handleActions(
         draft['write']['writeError'] = null;
         draft['write']['updateResult'] = null;
         draft['write']['updateError'] = updateError;
+      }),
+
+    [REMOVE_LEDGER_SUCCESS]: (state, { payload: removed }) =>
+      produce(state, draft => {
+        draft['remove']['removeResult'] = removed;
+        draft['remove']['removeError'] = null;
+      }),
+    [REMOVE_LEDGER_FAILURE]: (state, { payload: removeError }) =>
+      produce(state, draft => {
+        draft['remove']['removeResult'] = null;
+        draft['remove']['removeError'] = removeError;
       }),
   },
   initialState,
