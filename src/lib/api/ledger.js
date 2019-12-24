@@ -8,6 +8,7 @@ export const addLedger = ({
   place,
   amount,
   date,
+  use,
   user,
 }) =>
   client.post('/api/ledger/add', {
@@ -17,6 +18,7 @@ export const addLedger = ({
     place,
     amount,
     date,
+    use,
     user,
   });
 
@@ -39,6 +41,7 @@ export const updateLedger = ({
   place,
   amount,
   date,
+  use,
   user,
 }) =>
   client.post('/api/ledger/update', {
@@ -49,5 +52,6 @@ export const updateLedger = ({
     place,
     amount,
     date,
+    use,
     user,
   });

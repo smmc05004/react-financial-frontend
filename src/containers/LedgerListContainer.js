@@ -79,7 +79,7 @@ const LedgerListContainer = ({ location, history }) => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const { id, type, category, title, place, amount, date } = form[
+    const { id, type, category, title, place, amount, date, use } = form[
       selectedType
     ];
 
@@ -92,10 +92,22 @@ const LedgerListContainer = ({ location, history }) => {
     // 아이디가 있는 경우 수정, 그렇지 않으면 새로 저장
     if (id) {
       dispatch(
-        updateLedger({ id, type, category, title, place, amount, date, user }),
+        updateLedger({
+          id,
+          type,
+          category,
+          title,
+          place,
+          amount,
+          date,
+          use,
+          user,
+        }),
       );
     } else {
-      dispatch(addLedger({ type, category, title, place, amount, date, user }));
+      dispatch(
+        addLedger({ type, category, title, place, amount, date, use, user }),
+      );
     }
   };
 
@@ -112,7 +124,7 @@ const LedgerListContainer = ({ location, history }) => {
     dispatch(setPeriod({ period: defaultPeriod }));
   }, [dispatch]);
 
-  // 등록시 성공하면 alert창 띄우고 modal 끔
+  // 등록, 수정시 성공하면 alert창 띄우고 modal 끔
   useEffect(() => {
     if (form.writeResult) {
       alert('저장 되었습니다.');
@@ -121,10 +133,29 @@ const LedgerListContainer = ({ location, history }) => {
 
       // 성공시 리스트 다시 불러옴
       history.push(
-        `/ledger/write?pageNum=${tempValue}&userId=${user.userId}&period=${period}&result=${form.writeResult._id}`,
+        `/ledger/write?pageNum=${tempValue}&userId=${user.userId}&period=${period}&writeResult=${form.writeResult._id}`,
       );
     }
-  }, [form.writeResult]);
+
+    if (form.updateResult) {
+      alert('수정 되었습니다.');
+
+      setModal(!modal);
+
+      // 성공시 리스트 다시 불러옴
+      history.push(
+        `/ledger/write?pageNum=${tempValue}&userId=${
+          user.userId
+        }&period=${period}&updateResult=${form.updateResult._id +
+          form.updateResult.type +
+          form.updateResult.category +
+          form.updateResult.title +
+          form.updateResult.place +
+          form.updateResult.amount +
+          form.updateResult.date}`,
+      );
+    }
+  }, [form.writeResult, form.updateResult]);
 
   // 쿼리스트링 요청시
   useEffect(() => {

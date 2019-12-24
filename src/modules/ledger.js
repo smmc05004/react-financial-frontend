@@ -50,13 +50,14 @@ export const setPeriod = createAction(SET_PERIOD, ({ period }) => ({
 
 export const addLedger = createAction(
   ADD_LEDGER,
-  ({ type, category, title, place, amount, date, user }) => ({
+  ({ type, category, title, place, amount, date, use, user }) => ({
     type,
     category,
     title,
     place,
     amount,
     date,
+    use,
     user,
   }),
 );
@@ -110,6 +111,7 @@ const initialState = {
       place: '',
       amount: '',
       date: '',
+      use: 'Y',
     },
     income: {
       id: '',
@@ -119,10 +121,13 @@ const initialState = {
       place: '',
       amount: '',
       date: '',
+      use: 'Y',
     },
     selectedType: 'expense',
     writeResult: null,
     writeError: null,
+    updateResult: null,
+    updateError: null,
   },
 
   list: {
@@ -195,6 +200,7 @@ const ledger = handleActions(
         draft['write'][ledger.type]['place'] = ledger.place;
         draft['write'][ledger.type]['amount'] = ledger.amount;
         draft['write'][ledger.type]['date'] = localizedDate;
+        draft['write'][ledger.type]['use'] = ledger.use;
 
         draft['write']['selectedType'] = ledger.type;
 
@@ -209,13 +215,17 @@ const ledger = handleActions(
 
     [UPDATE_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
       produce(state, draft => {
-        draft['write']['writeResult'] = ledger;
+        draft['write']['writeResult'] = null;
         draft['write']['writeError'] = null;
+        draft['write']['updateResult'] = ledger;
+        draft['write']['updateError'] = null;
       }),
-    [UPDATE_LEDGER_FAILURE]: (state, { payload: writeError }) =>
+    [UPDATE_LEDGER_FAILURE]: (state, { payload: updateError }) =>
       produce(state, draft => {
         draft['write']['writeResult'] = null;
-        draft['write']['writeError'] = writeError;
+        draft['write']['writeError'] = null;
+        draft['write']['updateResult'] = null;
+        draft['write']['updateError'] = updateError;
       }),
   },
   initialState,
