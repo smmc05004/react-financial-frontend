@@ -7,14 +7,12 @@ const LeftMenu = () => {
     <div className="ledgerLeft">
       <ul>
         <li>
-          {/* <a href="#">쓰기</a> */}
-          <Link to={'/ledger?pageNum=1&userId=undefined&yearMonth=2019-12'}>
+          <Link to={'/ledger/write?pageNum=1&userId=hong&period=2019-12'}>
             쓰기
           </Link>
         </li>
         <li>
-          {/* <a href="#">분석</a> */}
-          <Link to="">분석</Link>
+          <Link to={`/ledger/analysis`}>분석</Link>
         </li>
       </ul>
     </div>

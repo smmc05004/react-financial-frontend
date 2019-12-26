@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import YearMonth from '../../common/YearMonth';
+import Graph from './Graph';
+import './Graph.css';
 
-const Analysis = () => {
+const Analysis = ({ onChangePeriod }) => {
   return (
-    <div>
-      <Link to={'/ledger?pageNum=1&userId=undefined&yearMonth=2019-12'}>
-        쓰기 이동
-      </Link>
-      <p>분석 페이지</p>
+    <div className="ledgerAnalysis">
+      <YearMonth onChangePeriod={onChangePeriod} />
+
+      <Graph />
     </div>
   );
 };

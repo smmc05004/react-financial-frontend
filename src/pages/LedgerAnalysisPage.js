@@ -1,8 +1,18 @@
 import React from 'react';
-import Analysis from '../components/ledger/Analysis';
+import HeaderContainer from '../containers/HeaderContainer';
+import LedgerAnalysisContainer from '../containers/LedgerAnalysisContainer';
+import LeftMenu from '../components/ledger/LeftMenu';
 
 const LedgerAnalysisPage = () => {
-  return <Analysis />;
+  return (
+    <div className="LedgerPageWrapper">
+      <HeaderContainer />
+      <LeftMenu />
+      <div className="ledgerWrapper">
+        <LedgerAnalysisContainer />
+      </div>
+    </div>
+  );
 };
 
 export default LedgerAnalysisPage;

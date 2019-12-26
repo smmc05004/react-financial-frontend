@@ -1,0 +1,11 @@
+.LedgerPageWrapper {
+  position: absolute;
+  height: 100% !important;
+  width: 100%;
+}
+
+.LedgerPageWrapper .ledgerWrapper {
+  width: 100%;
+  height: calc(100% - 50px);
+  padding-left: 200px;
+}
