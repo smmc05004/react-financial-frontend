@@ -3,31 +3,31 @@ import LedgerAnalysis from '../components/ledger/LedgerAnalysis';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPeriod, ledgerAnalysis } from '../modules/ledger';
 import { withRouter } from 'react-router-dom';
+import qs from 'qs';
 
-function getDefaultPeriod() {
-  const today = new Date();
-  const yy = today.getFullYear();
-  const mm = today.getMonth() + 1;
-
-  return `${yy}-${mm}`;
-}
-
-const LedgerAnalysisContainer = ({ history }) => {
+const LedgerAnalysisContainer = ({ history, location }) => {
   const dispatch = useDispatch();
-  const { user, userId, period, expense, income } = useSelector(
+  const { user, userId, period, analysis } = useSelector(
     ({ user, ledger }) => ({
       user: user.user,
       userId: user.user.userId,
       period: ledger.period,
-      expense: ledger.analysis.expense,
-      income: ledger.analysis.income,
+      analysis: ledger.analysis,
     }),
   );
 
   useEffect(() => {
-    const defaultPeriod = getDefaultPeriod();
-    dispatch(setPeriod({ period: defaultPeriod }));
-  }, [dispatch]);
+    // 요청 url에서 쿼리스트링 가져와서 period 세팅
+    const { period } = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    });
+
+    if (period) {
+      dispatch(setPeriod({ period }));
+    } else {
+      alert('기간이 설정되지 않았습니다.');
+    }
+  }, [dispatch, location.search]);
 
   useEffect(() => {
     if (userId && period) {
@@ -46,8 +46,7 @@ const LedgerAnalysisContainer = ({ history }) => {
       onChangePeriod={onChangePeriod}
       period={period}
       userId={user.userId}
-      expense={expense}
-      income={income}
+      analysis={analysis}
     />
   );
 };

@@ -16,14 +16,6 @@ import {
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
 
-function getDefaultPeriod() {
-  const today = new Date();
-  const yy = today.getFullYear();
-  const mm = today.getMonth() + 1;
-
-  return `${yy}-${mm}`;
-}
-
 const LedgerListContainer = ({ location, history }) => {
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -129,12 +121,6 @@ const LedgerListContainer = ({ location, history }) => {
     setModal(!modal);
   };
 
-  // default 기간 세팅
-  useEffect(() => {
-    const defaultPeriod = getDefaultPeriod();
-    dispatch(setPeriod({ period: defaultPeriod }));
-  }, [dispatch]);
-
   // 등록, 수정, 삭제시 성공하면 alert창 띄우고 modal 끔
   useEffect(() => {
     if (form.writeResult) {
@@ -174,13 +160,19 @@ const LedgerListContainer = ({ location, history }) => {
     }
   }, [form.writeResult, form.updateResult, removed.removeResult]);
 
-  // 쿼리스트링 요청시
+  // 요청 url에서 쿼리스트링 가져와서 period, list 세팅
   useEffect(() => {
     const { pageNum, userId, period } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
 
-    dispatch(ledgerList({ pageNum, userId, period }));
+    if (pageNum && userId && period) {
+      dispatch(setPeriod({ period }));
+      dispatch(ledgerList({ pageNum, userId, period }));
+    } else {
+      alert('요청이 올바르지 않습니다.');
+    }
+
     setTempValue(parseInt(pageNum));
   }, [dispatch, location.search]);
 

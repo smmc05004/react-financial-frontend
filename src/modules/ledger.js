@@ -286,14 +286,11 @@ const ledger = handleActions(
         draft['remove']['removeError'] = removeError;
       }),
 
-    [LEDGER_ANALYSIS_SUCCESS]: (
-      state,
-      { payload: { expense, income, sumResult } },
-    ) =>
+    [LEDGER_ANALYSIS_SUCCESS]: (state, { payload: { expense, income, sum } }) =>
       produce(state, draft => {
         draft['analysis']['expense'] = expense;
         draft['analysis']['income'] = income;
-        draft['analysis']['sum'] = sumResult;
+        draft['analysis']['sum'] = sum;
         draft['analysis']['error'] = null;
       }),
 

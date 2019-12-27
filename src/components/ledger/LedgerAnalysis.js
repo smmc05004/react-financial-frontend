@@ -3,13 +3,7 @@ import YearMonth from '../../common/YearMonth';
 import Graph from './Graph';
 import './Graph.css';
 
-const LedgerAnalysis = ({
-  onChangePeriod,
-  period,
-  userId,
-  expense,
-  income,
-}) => {
+const LedgerAnalysis = ({ onChangePeriod, period, userId, analysis }) => {
   return (
     <div className="ledgerAnalysis">
       <YearMonth
@@ -18,7 +12,7 @@ const LedgerAnalysis = ({
         userId={userId}
       />
 
-      <Graph expense={expense} income={income} />
+      <Graph analysis={analysis} />
     </div>
   );
 };
