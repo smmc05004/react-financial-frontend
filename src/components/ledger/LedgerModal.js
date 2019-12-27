@@ -74,11 +74,10 @@ const LedgerModal = ({
                   // defaultValue={form.expense.category}
                   multiple
                 >
-                  <option value="food">음식</option>
-                  <option value="supplies">생홀용품</option>
-                  <option value="communication">통신</option>
-                  <option value="transportation">교통</option>
-                  <option value="else">기타</option>
+                  <option value="음식">음식</option>
+                  <option value="생활용품">생활용품</option>
+                  <option value="통신">통신</option>
+                  <option value="교통">교통</option>
                 </Input>
               </FormGroup>
               <FormGroup>
@@ -135,10 +134,10 @@ const LedgerModal = ({
                   multiple
                   // defaultValue={form.income.category}
                 >
-                  <option value="salary">급여</option>
-                  <option value="bonus">보너스</option>
-                  <option value="finance">금융소득</option>
-                  <option value="else">기타</option>
+                  <option value="급여">급여</option>
+                  <option value="보너스">보너스</option>
+                  <option value="금융소득">금융소득</option>
+                  <option value="기타">기타</option>
                 </Input>
               </FormGroup>
               <FormGroup>
