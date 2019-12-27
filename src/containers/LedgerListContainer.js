@@ -46,7 +46,8 @@ const LedgerListContainer = ({ location, history }) => {
     user: user.user,
     list: ledger.list,
     ledger: ledger.read,
-    period: ledger.list.period,
+    // period: ledger.list.period,
+    period: ledger.period,
     removed: ledger.remove,
   }));
 

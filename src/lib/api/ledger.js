@@ -58,3 +58,11 @@ export const updateLedger = ({
 
 export const removeLedger = ({ idArr }) =>
   client.post('/api/ledger/remove', { idArr });
+
+export const analysis = ({ userId, period }) => {
+  const queryString = qs.stringify({
+    userId,
+    period,
+  });
+  return client.get(`/api/ledger/analysis?${queryString}`);
+};

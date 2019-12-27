@@ -1,23 +1,55 @@
-import React from 'react';
-import Analysis from '../components/ledger/Analysis';
+import React, { useEffect } from 'react';
+import LedgerAnalysis from '../components/ledger/LedgerAnalysis';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPeriod } from '../modules/ledger';
+import { setPeriod, ledgerAnalysis } from '../modules/ledger';
+import { withRouter } from 'react-router-dom';
 
-const LedgerAnalysisContainer = () => {
+function getDefaultPeriod() {
+  const today = new Date();
+  const yy = today.getFullYear();
+  const mm = today.getMonth() + 1;
+
+  return `${yy}-${mm}`;
+}
+
+const LedgerAnalysisContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const { user, list, period } = useSelector(({ user, ledger }) => ({
-    user: user.user,
-    list: ledger.list,
-    period: ledger.list.period,
-  }));
+  const { user, userId, period, expense, income } = useSelector(
+    ({ user, ledger }) => ({
+      user: user.user,
+      userId: user.user.userId,
+      period: ledger.period,
+      expense: ledger.analysis.expense,
+      income: ledger.analysis.income,
+    }),
+  );
+
+  useEffect(() => {
+    const defaultPeriod = getDefaultPeriod();
+    dispatch(setPeriod({ period: defaultPeriod }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userId && period) {
+      dispatch(ledgerAnalysis({ userId, period }));
+    }
+  }, [dispatch, userId, period]);
 
   const onChangePeriod = e => {
-    console.log('날짜 변경');
     const { value } = e.target;
     dispatch(setPeriod({ period: value }));
+    history.push(`/ledger/analysis?userId=${user.userId}&period=${value}`);
   };
 
-  return <Analysis onChangePeriod={onChangePeriod} />;
+  return (
+    <LedgerAnalysis
+      onChangePeriod={onChangePeriod}
+      period={period}
+      userId={user.userId}
+      expense={expense}
+      income={income}
+    />
+  );
 };
 
-export default LedgerAnalysisContainer;
+export default withRouter(LedgerAnalysisContainer);

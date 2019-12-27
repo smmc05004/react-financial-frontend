@@ -39,6 +39,12 @@ const [
   REMOVE_LEDGER_FAILURE,
 ] = createRequestActionTypes('ledger/REMOVE_LEDGER');
 
+const [
+  LEDGER_ANALYSIS,
+  LEDGER_ANALYSIS_SUCCESS,
+  LEDGER_ANALYSIS_FAILURE,
+] = createRequestActionTypes('ledger/LEDGER_ANALYSIS');
+
 export const initialField = createAction(INITIAL_FIELD);
 export const changeField = createAction(
   CHANGE_FIELD,
@@ -96,6 +102,14 @@ export const removeLedger = createAction(REMOVE_LEDGER, ({ idArr }) => ({
   idArr,
 }));
 
+export const ledgerAnalysis = createAction(
+  LEDGER_ANALYSIS,
+  ({ userId, period }) => ({
+    userId,
+    period,
+  }),
+);
+
 const addLedgerSaga = createRequestSaga(ADD_LEDGER, ledgerAPI.addLedger);
 const ledgerListSaga = createRequestSaga(LEDGERLIST, ledgerAPI.listLedgers);
 const getLedgerSaga = createRequestSaga(GET_LEDGER, ledgerAPI.getLedger);
@@ -107,6 +121,10 @@ const removeLedgerSaga = createRequestSaga(
   REMOVE_LEDGER,
   ledgerAPI.removeLedger,
 );
+const ledgerAnalysisSaga = createRequestSaga(
+  LEDGER_ANALYSIS,
+  ledgerAPI.analysis,
+);
 
 export function* ledgerSaga() {
   yield takeLatest(ADD_LEDGER, addLedgerSaga);
@@ -114,6 +132,7 @@ export function* ledgerSaga() {
   yield takeLatest(GET_LEDGER, getLedgerSaga);
   yield takeLatest(UPDATE_LEDGER, updateLedgerSaga);
   yield takeLatest(REMOVE_LEDGER, removeLedgerSaga);
+  yield takeLatest(LEDGER_ANALYSIS, ledgerAnalysisSaga);
 }
 
 const initialState = {
@@ -149,7 +168,6 @@ const initialState = {
     list: null,
     listError: null,
     totalCount: 0,
-    period: '',
   },
 
   read: {
@@ -160,6 +178,15 @@ const initialState = {
   remove: {
     removeResult: null,
     removeError: null,
+  },
+
+  period: '',
+
+  analysis: {
+    expense: null,
+    income: null,
+    sum: null,
+    error: null,
   },
 };
 
@@ -186,7 +213,7 @@ const ledger = handleActions(
 
     [SET_PERIOD]: (state, { payload: { period } }) =>
       produce(state, draft => {
-        draft['list']['period'] = period;
+        draft['period'] = period;
       }),
 
     [ADD_LEDGER_SUCCESS]: (state, { payload: ledger }) =>
@@ -257,6 +284,25 @@ const ledger = handleActions(
       produce(state, draft => {
         draft['remove']['removeResult'] = null;
         draft['remove']['removeError'] = removeError;
+      }),
+
+    [LEDGER_ANALYSIS_SUCCESS]: (
+      state,
+      { payload: { expense, income, sumResult } },
+    ) =>
+      produce(state, draft => {
+        draft['analysis']['expense'] = expense;
+        draft['analysis']['income'] = income;
+        draft['analysis']['sum'] = sumResult;
+        draft['analysis']['error'] = null;
+      }),
+
+    [LEDGER_ANALYSIS_FAILURE]: (state, { payload: error }) =>
+      produce(state, draft => {
+        draft['analysis']['expense'] = null;
+        draft['analysis']['income'] = null;
+        draft['analysis']['sum'] = null;
+        draft['analysis']['error'] = error;
       }),
   },
   initialState,

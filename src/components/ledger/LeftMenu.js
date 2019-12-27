@@ -12,7 +12,7 @@ const LeftMenu = () => {
           </Link>
         </li>
         <li>
-          <Link to={`/ledger/analysis`}>분석</Link>
+          <Link to={`/ledger/analysis?userId=hong&period=2019-12`}>분석</Link>
         </li>
       </ul>
     </div>
