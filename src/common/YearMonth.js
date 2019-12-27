@@ -3,7 +3,6 @@ import { Input } from 'reactstrap';
 import './YearMonth.css';
 
 const YearMonth = ({ onChangePeriod, period }) => {
-  console.log('period: ', period);
   return (
     <div className="month">
       {period && (

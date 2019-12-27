@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 const Graph = ({ expense, income }) => {
-  console.log('Graph 컴포넌트: ', expense, income);
-
   return (
     <>
       <div>
