@@ -11,13 +11,13 @@ function getDefaultPeriod() {
 }
 
 const LeftMenuContainer = () => {
-  const { userId } = useSelector(({ user }) => ({
-    userId: user.user.userId,
+  const { user } = useSelector(({ user }) => ({
+    user: user.user,
   }));
 
   const [perirod] = useState(getDefaultPeriod);
 
-  return <LeftMenu userId={userId} period={perirod} />;
+  return <LeftMenu user={user} period={perirod} />;
 };
 
 export default LeftMenuContainer;
