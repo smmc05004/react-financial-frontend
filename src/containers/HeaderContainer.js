@@ -15,14 +15,14 @@ const HeaderContiner = ({ history }) => {
   };
 
   const onClick = () => {
-    history.push('/login');
+    history.push('/');
   };
 
-  useEffect(() => {
-    if (user === null) {
-      history.push('/');
-    }
-  }, [user, history]);
+  // useEffect(() => {
+  //   if (user === null) {
+  //     history.push('/');
+  //   }
+  // }, [user, history]);
   return <Header user={user} onLogout={onLogout} onClick={onClick} />;
 };
 

@@ -25,7 +25,7 @@ const Header = ({ user, onLogout, onClick }) => {
         <>
           <div className="headerRight">
             {/* 로그아웃 버튼 및 user ID */}
-            <span className="userInfo">{user.userId}</span>
+            <span className="userInfo">{`${user.userId}`}</span>
             <span className="headerBtn">
               <Button to="/" btnClass="logoutBtn" onLogout={onLogout}>
                 로그아웃
@@ -50,7 +50,7 @@ const Header = ({ user, onLogout, onClick }) => {
         // 로그인 하지 않은 경우
         <div className="headerRight">
           <span className="headerBtn">
-            <Button to="/login" btnClass="loginBtn" onClick={onClick}>
+            <Button to="/" btnClass="loginBtn" onClick={onClick}>
               로그인
             </Button>
           </span>

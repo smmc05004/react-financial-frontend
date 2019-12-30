@@ -1,4 +1,4 @@
-.registerFormWrapper {
+.loginFormWrapper {
   position: relative;
   width: 100%;
   height: calc(100% - 100px);
@@ -19,26 +19,28 @@
   }
 }
 
-.registerForm .headerWrapper {
+.loginForm {
+  width: 400px;
+  height: 500px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.loginForm .headerWrapper {
   width: 100%;
   height: 20%;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.registerForm {
-  width: 600px;
-  height: 700px;
-  border: 1px solid black;
-}
-
-.registerForm .inputWrapper {
+.loginForm .inputWrapper {
   width: 100%;
-  height: 15%;
+  height: 20%;
 }
 
-.registerForm .inputWrapper input {
+.loginForm .inputWrapper input {
   width: calc(100% - 20px);
   height: 78%;
   padding: 0px;
@@ -47,7 +49,7 @@
   background: none;
 }
 
-.registerForm .inputWrapper .inputUnderBar {
+.loginForm .inputWrapper .inputUnderBar {
   width: 1px;
   height: 2%;
   margin-top: -25px;
@@ -55,41 +57,46 @@
   transition: width 0.5s;
 }
 
-.registerForm input:focus ~ .inputUnderBar {
+.loginForm input:focus ~ .inputUnderBar {
   width: 100%;
   border-bottom: 2px solid #2196f3;
 }
 
-.registerForm .inputWrapper .inputError {
+.loginForm .loginBtnWrapper {
   width: 100%;
   height: 20%;
-  border: none;
+  padding-top: 10%;
+}
+
+.loginForm .loginBtnWrapper .loginBtn {
+  width: 100%;
+  height: 100%;
   padding: 0px;
-  color: red;
-  margin-top: 10px;
-}
-
-/* .registerForm .inputWrapper input:focus ~ div {
-  border: 1px;
-  border-bottom: 1px solid rgb(26, 198, 255);
-} */
-
-.registerForm .registerBtnWrapper {
-  width: 100%;
-  height: 20%;
-  padding-top: 5%;
-}
-.registerBtnWrapper input[type='submit'] {
-  width: 100%;
-  height: 75%;
   margin: 0px;
   border: none;
   outline: none;
 }
 
-.registerBtnWrapper input[type='submit']:hover {
+.loginForm .loginBtn:hover {
   background-color: #2196f3;
   box-shadow: 0px 0px 10px #2196f3;
   cursor: pointer;
   color: white;
+}
+
+.loginForm .registerLink {
+  width: 100%;
+  height: 20%;
+  text-align: right;
+  padding-top: 10%;
+}
+
+.loginForm .registerLink a {
+  color: black;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.loginForm .registerLink a:hover {
+  text-shadow: 0 0 10px #2196f3;
 }

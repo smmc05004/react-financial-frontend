@@ -2,8 +2,33 @@
   float: left;
   width: 200px;
   height: calc(100% - 50px);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.ledgerLeft ul {
+.ledgerLeft .leftUl {
   list-style: none;
+  width: 100%;
+  height: 100%;
+  padding: 50px 0 0 0;
+  margin: 0;
+}
+
+.ledgerLeft .leftUl .leftLi {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.ledgerLeft .leftUl .leftLi:hover {
+  background-color: white;
+  cursor: pointer;
+}
+.ledgerLeft .leftUl .leftLi:hover a {
+  color: black;
+  text-decoration: none;
+}
+
+.ledgerLeft .leftUl .leftLi a {
+  color: white;
 }

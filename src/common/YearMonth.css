@@ -1,8 +1,9 @@
 .month {
   width: 20%;
-  height: 10%;
+  height: 15%;
   text-align: center;
   margin: 0 40%;
+  padding-top: 5%;
 }
 
 .month input {

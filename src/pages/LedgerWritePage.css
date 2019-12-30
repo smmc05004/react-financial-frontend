@@ -2,6 +2,9 @@
   position: absolute;
   height: 100% !important;
   width: 100%;
+  background-image: url(../img/financial.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .LedgerPageWrapper .ledgerWrapper {
