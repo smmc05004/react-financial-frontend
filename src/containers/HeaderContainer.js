@@ -18,11 +18,15 @@ const HeaderContiner = ({ history }) => {
     history.push('/');
   };
 
-  // useEffect(() => {
-  //   if (user === null) {
-  //     history.push('/');
-  //   }
-  // }, [user, history]);
+  useEffect(() => {
+    if (user === null) {
+      if (history.location.pathname === '/register') {
+        history.push('/register');
+      } else {
+        history.push('/');
+      }
+    }
+  }, [user, history]);
   return <Header user={user} onLogout={onLogout} onClick={onClick} />;
 };
 
