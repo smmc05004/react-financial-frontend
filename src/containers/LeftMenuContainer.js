@@ -5,8 +5,11 @@ import LeftMenu from '../components/ledger/LeftMenu';
 function getDefaultPeriod() {
   const today = new Date();
   const yy = today.getFullYear();
-  const mm = today.getMonth() + 1;
+  let mm = today.getMonth() + 1;
 
+  if (mm < 10) {
+    mm = `0${mm}`;
+  }
   return `${yy}-${mm}`;
 }
 
