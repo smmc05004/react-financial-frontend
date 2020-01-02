@@ -1,3 +1,71 @@
 .ledgerAnalysis {
-  height: 50%;
+  width: 100%;
+  height: 100%;
+}
+/* expense chart */
+.ledgerAnalysis .expenseChart {
+  width: 100%;
+  height: 40%;
+  overflow: auto;
+}
+
+.ledgerAnalysis .expenseChart .chartArea {
+  width: 100%;
+  height: 100%;
+}
+
+.ledgerAnalysis .expenseChart .chartArea .expenseBar {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.ledgerAnalysis .expenseChart .chartArea .expenseBar .chartjs-size-monitor {
+  width: 100%;
+  height: 100%;
+}
+
+.ledgerAnalysis .expenseChart .chartArea .expenseDonut {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.ledgerAnalysis .expenseChart .chartArea .expenseDonut .chartjs-size-monitor {
+  width: 100%;
+  height: 100%;
+}
+
+/* income chart */
+.ledgerAnalysis .incomeChart {
+  width: 100%;
+  height: 40%;
+  overflow: auto;
+}
+
+.ledgerAnalysis .incomeChart .chartArea {
+  width: 100%;
+  height: 100%;
+}
+
+.ledgerAnalysis .incomeChart .chartArea .incomeBar {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.ledgerAnalysis .incomeChart .chartArea .incomeBar .chartjs-size-monitor {
+  width: 100%;
+  height: 100%;
+}
+
+.ledgerAnalysis .incomeChart .chartArea .incomeDonut {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.ledgerAnalysis .incomeChart .chartArea .incomeDonut .chartjs-size-monitor {
+  width: 100%;
+  height: 100%;
 }
